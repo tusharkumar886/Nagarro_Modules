@@ -4,6 +4,8 @@ var bodyParser = require("body-parser");
 var app = express();
 var todo_db = require("./seed.js");
 
+app.listen(3000);
+
 app.use("/",express.static(__dirname+"/public"));
 
 app.use("/",function (req, res,next) {
@@ -45,11 +47,10 @@ app.post("/api/todos",function (req, res) {
         res.status(400).json({err:"Todo title can't be empty"});
 
     }else {
-        var new_todo = {
-            title : req.body.todo_title,
-            status : todo_db.StatusENUMS.ACTIVE
+        todo_db.todos[todo_db.next_todo_id] = {
+            title: req.body.todo_title,
+            status: todo_db.StatusENUMS.ACTIVE
         };
-        todo_db.todos[todo_db.next_todo_id] = new_todo;
         todo_db.next_todo_id = todo_db.next_todo_id + 1;
     }
     res.json.print(todo_db.todos);
@@ -79,9 +80,62 @@ app.put("/api/todos/:id",function (req, res) {
 });
 
 
-app.listen(3000);
+// 5. Get all Active todos
+app.get("/api/todos/active",function (req, res) {
+    var todo_ACTIVE = {};
+    console.log(todo_db.next_todo_id);
+    for ( var i=1; i < todo_db.next_todo_id; i++ ) {
+        if ( todo_db.todos[i].status === todo_db.StatusENUMS.ACTIVE ) {
+            todo_ACTIVE[i]=todo_db.todos[i];
+        }
+    }
+    res.json(todo_ACTIVE);
+});
 
+// 6. Get all Complete todos
+app.get("/api/todos/complete",function (req, res) {
+    var todo_ACTIVE = {};
+    for ( var i=1; i < todo_db.next_todo_id; i++ ) {
+        if ( todo_db.todos[i].status === todo_db.StatusENUMS.COMPLETE ) {
+            todo_ACTIVE[i]=todo_db.todos[i];
+        }
+    }
+    res.json(todo_ACTIVE);
+});
 
+// 7. Get all Deleted todos
+app.get("/api/todos/deleted",function (req, res) {
+    var todo_ACTIVE = {};
+    for ( var i=1; i < todo_db.next_todo_id; i++ ) {
+        if ( todo_db.todos[i].status === todo_db.StatusENUMS.DELETED ) {
+            todo_ACTIVE[i]=todo_db.todos[i];
+        }
+    }
+    res.json(todo_ACTIVE);
+});
 
+// 8. marks a todo as complete
+app.post("/api/todos/complete/:id",function (req, res) {
+    var mod_id = req.params.id;
+    var todo = todo_db.todos[mod_id];
 
+    if(!todo){
+        res.status(400).json({err:"Todo doesn't exist."});
+    }else{
+        todo_db.todos[mod_id].status = todo_db.StatusENUMS.COMPLETE;
+    }
+    res.json(todo_db.todos[mod_id]);
+});
 
+// 9. marks a todo as active
+app.post("/api/todos/active/:id",function (req, res) {
+    var mod_id = req.params.id;
+    var todo = todo_db.todos[mod_id];
+
+    if(!todo){
+        res.status(400).json({err:"Todo doesn't exist."});
+    }else{
+        todo_db.todos[mod_id].status = todo_db.StatusENUMS.ACTIVE;
+    }
+    res.json(todo_db.todos[mod_id]);
+});
