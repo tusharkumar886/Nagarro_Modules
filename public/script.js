@@ -5,8 +5,25 @@ const STATUS_OK = 200;
 const TODOS_LIST_ID = "todos_list_id";
 
 function add_todo_elements(id, todos_data_json) {
+    var todos = JSON.parse(todos_data_json);
     var parent = document.getElementById(id);
-    parent.innerText = todos_data_json;
+
+    if(parent){
+        Object.keys(todos).forEach(
+            function (key) {
+                var todo_element = createTodoElement(key,todos[key]);
+                parent.appendChild(todo_element);
+            }
+        )
+    }
+}
+
+function createTodoElement(id, todo_object) {
+    var todo_element = document.createElement("div");
+    todo_element.innerText = todo_object.title;
+    todo_element.setAttribute("data-id",id);
+    return todo_element;
+
 }
 
 function getTodosAJAX() {
@@ -33,7 +50,8 @@ function getTodosAJAX() {
                 add_todo_elements(TODOS_LIST_ID,xhr.responseText);
             }
         }
-    }//end of callback
+    }
+    //end of callback
 
     xhr.send(data = null);
 }
