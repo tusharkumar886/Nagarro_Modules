@@ -53,7 +53,7 @@ app.post("/api/todos",function (req, res) {
         };
         todo_db.next_todo_id = todo_db.next_todo_id + 1;
     }
-    res.json.print(todo_db.todos);
+    res.json(todo_db.todos);
 });
 
 // 4. Update existing
