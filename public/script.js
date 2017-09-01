@@ -28,20 +28,57 @@ function createTodoElement(id, todo_object) {
     todo_element.setAttribute("class" , "todoStatus"+ todo_object.status + " " + "breathVertical");
 
     if (todo_object.status === "ACTIVE"){
-        var complete_button = document.createElement("button");
-        complete_button.innerText = "Mark as complete";
-        complete_button.setAttribute("onclick", "completeAJAX("+id+")");
-        complete_button.setAttribute("class", "breathHorizontal");
-        todo_element.appendChild(complete_button);
+
+            var complete_button = document.createElement("input");
+            complete_button.innerText = "Mark as complete";
+            complete_button.setAttribute("type","checkbox");
+            complete_button.setAttribute("onchange", "completeAJAX("+id+")");
+            complete_button.setAttribute("class", "breathHorizontal");
+            todo_element.appendChild(complete_button);
+
+            var remove_button = document.createElement("button");
+            remove_button.innerText = "x";
+            remove_button.setAttribute("onclick", "deleteAJAX("+id+")");
+            remove_button.setAttribute("class", "breathHorizontal");
+            todo_element.appendChild(remove_button);
+
     }else
     if (todo_object.status === "COMPLETE"){
+        var active_button = document.createElement("input");
+        active_button.setAttribute("type","checkbox");
+        active_button.setAttribute("checked","true");
+        active_button.setAttribute("onchange", "activeAJAX("+id+")");
+        active_button.setAttribute("class", "breathHorizontal");
+        todo_element.appendChild(active_button);
+
         var delete_button = document.createElement("button");
-        delete_button.innerText = "Mark as deleted";
+        delete_button.innerText = "x";
         delete_button.setAttribute("onclick","deleteAJAX("+id+")");
         delete_button.setAttribute("class", "breathHorizontal");
         todo_element.appendChild(delete_button);
     }
+
     return todo_element;
+}
+
+function activeAJAX(id) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("PUT","/api/todos/"+id,true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    var data = "todo_status=ACTIVE";
+
+    xhr.onreadystatechange = function(){
+
+        if (xhr.readyState === RESPONSE_DONE) {
+            if (xhr.status === STATUS_OK) {
+                getTodosAJAX()
+            }
+            else {
+                console.log(xhr.responseText);
+            }
+        }
+    };
+    xhr.send(data);
 }
 
 function completeAJAX(id) {
