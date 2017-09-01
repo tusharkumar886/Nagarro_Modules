@@ -6,8 +6,8 @@ var StatusENUMS = {
 
 var todos ={
     1:{title:"Learn JS",status: StatusENUMS.ACTIVE},
-    2:{title:"Git tutorial",status: StatusENUMS.ACTIVE},
-    3:{title:"Interactive git",status: StatusENUMS.COMPLETE}
+    2:{title:"Git tutorial",status: StatusENUMS.COMPLETE},
+    3:{title:"Interactive git",status: StatusENUMS.DELETED}
 }
 
 var next_todo_id = 4;

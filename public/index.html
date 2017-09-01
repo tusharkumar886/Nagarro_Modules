@@ -12,12 +12,17 @@
 <body>
 
     <h1>My Todo List</h1>
-    <button onclick="getTodosAJAX()">Get Todos</button>
 
     <div id="todos_list_id" ></div>
+    <div>Active</div><br>
+    <div id="todos_list_active" ></div><br><hr><br>
+    <div>Complete</div><br>
+    <div id="todos_list_complete" ></div><br><hr><br>
+    <div>Deleted</div><br>
+    <div id="todos_list_deleted" ></div><br><hr><br>
 
     <input type="text" id="new_todo_title" placeholder="Enter Todo Title"/>
-    <input type="button" value="Add Todo" onclick="addTodoAJAX()"/>
+    <input class="breathHorizontal" type="button" value="Add Todo" onclick="addTodoAJAX()"/>
 
 </body>
 

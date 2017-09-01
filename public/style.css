@@ -17,8 +17,20 @@ div.todoStatusDELETED{
     margin-bottom:5px;
 }
 
-
 .breathHorizontal {
     margin-left:5px;
     margin-right:5px;
+}
+
+h1{
+    font-family: Calibri, sans-serif;
+    padding: 30px;
+    text-align: center;
+    color: gold;
+    background-color: black;
+}
+
+hr{
+    height: 2px;
+    background-color: black;
 }

@@ -33,6 +33,13 @@ function createTodoElement(id, todo_object) {
         complete_button.setAttribute("onclick", "completeAJAX("+id+")");
         complete_button.setAttribute("class", "breathHorizontal");
         todo_element.appendChild(complete_button);
+    }else
+    if (todo_object.status === "COMPLETE"){
+        var delete_button = document.createElement("button");
+        delete_button.innerText = "Mark as deleted";
+        delete_button.setAttribute("onclick","deleteAJAX("+id+")");
+        delete_button.setAttribute("class", "breathHorizontal");
+        todo_element.appendChild(delete_button);
     }
     return todo_element;
 }
@@ -47,44 +54,38 @@ function completeAJAX(id) {
 
         if (xhr.readyState === RESPONSE_DONE) {
             if (xhr.status === STATUS_OK) {
-                print_todo_elements(TODOS_LIST_ID, xhr.responseText);
+                getTodosAJAX()
             }
             else {
                 console.log(xhr.responseText);
             }
         }
-    }
+    };
     xhr.send(data);
 }
 
-function getTodosAJAX() {
-
-    //AJAX - XMLhttprequest object
-    //make req to server
-    //1. without reloading
-    //2. asynchronous
-
-    //xhr - JS object for making requests to server via JS
+function deleteAJAX(id) {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET","/api/todos",true);
+    xhr.open("DELETE","/api/todos/"+id,true);
 
-    xhr.onreadystatechange = function () {
-        //write code here that needs to be executed after response
+    xhr.onreadystatechange = function(){
 
-        //has response been received
-        if(xhr.readyState === RESPONSE_DONE){
-            //is response ok?
-            //Status code == 200
-            if(xhr.status === STATUS_OK){
-
-                print_todo_elements(TODOS_LIST_ID,xhr.responseText);
-            }else{
+        if (xhr.readyState === RESPONSE_DONE) {
+            if (xhr.status === STATUS_OK) {
+                getTodosAJAX()
+            }
+            else {
                 console.log(xhr.responseText);
             }
         }
-    } //end of callback
-
+    };
     xhr.send(data = null);
+}
+
+function getTodosAJAX() {
+    getTodosActiveAJAX();
+    getTodosCompleteAJAX();
+    getTodosDeletedAJAX();
 }
 
 function addTodoAJAX() {
@@ -105,10 +106,100 @@ function addTodoAJAX() {
             if (xhr.status === STATUS_OK) {
                 //console.log(xhr.responseText);
 
-                print_todo_elements(TODOS_LIST_ID, xhr.responseText);
+                getTodosAJAX()
             }
         }
-    }
+    };
 
     xhr.send(data);
+}
+
+function getTodosActiveAJAX() {
+
+    //AJAX - XMLhttprequest object
+    //make req to server
+    //1. without reloading
+    //2. asynchronous
+
+    //xhr - JS object for making requests to server via JS
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET","/api/todos/active",true);
+
+    xhr.onreadystatechange = function () {
+        //write code here that needs to be executed after response
+
+        //has response been received
+        if(xhr.readyState === RESPONSE_DONE){
+            //is response ok?
+            //Status code == 200
+            if(xhr.status === STATUS_OK){
+
+                print_todo_elements("todos_list_active",xhr.responseText);
+            }else{
+                console.log(xhr.responseText);
+            }
+        }
+    }; //end of callback
+
+    xhr.send(data = null);
+}
+
+function getTodosCompleteAJAX() {
+
+    //AJAX - XMLhttprequest object
+    //make req to server
+    //1. without reloading
+    //2. asynchronous
+
+    //xhr - JS object for making requests to server via JS
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET","/api/todos/complete",true);
+
+    xhr.onreadystatechange = function () {
+        //write code here that needs to be executed after response
+
+        //has response been received
+        if(xhr.readyState === RESPONSE_DONE){
+            //is response ok?
+            //Status code == 200
+            if(xhr.status === STATUS_OK){
+
+                print_todo_elements("todos_list_complete",xhr.responseText);
+            }else{
+                console.log(xhr.responseText);
+            }
+        }
+    }; //end of callback
+
+    xhr.send(data = null);
+}
+
+function getTodosDeletedAJAX() {
+
+    //AJAX - XMLhttprequest object
+    //make req to server
+    //1. without reloading
+    //2. asynchronous
+
+    //xhr - JS object for making requests to server via JS
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET","/api/todos/deleted",true);
+
+    xhr.onreadystatechange = function () {
+        //write code here that needs to be executed after response
+
+        //has response been received
+        if(xhr.readyState === RESPONSE_DONE){
+            //is response ok?
+            //Status code == 200
+            if(xhr.status === STATUS_OK){
+
+                print_todo_elements("todos_list_deleted",xhr.responseText);
+            }else{
+                console.log(xhr.responseText);
+            }
+        }
+    }; //end of callback
+
+    xhr.send(data = null);
 }
