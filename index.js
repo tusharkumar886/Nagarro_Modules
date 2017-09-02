@@ -4,7 +4,7 @@ var bodyParser = require("body-parser");
 var app = express();
 var todo_db = require("./seed.js");
 
-app.listen(3000);
+app.listen(4000);
 
 app.use("/",express.static(__dirname+"/public"));
 
