@@ -1,11 +1,15 @@
 const RESPONSE_DONE = 4;
 const STATUS_OK = 200;
-const TODOS_LIST_ID = "todos_list_id";
+const TODOS_LIST_ACTIVE = "todos_list_active";
+const TODOS_LIST_COMPLETE = "todos_list_complete";
+const TODOS_LIST_DELETED = "todos_list_deleted";
 const NEW_TODO_TITLE = "new_todo_title";
 
 window.onload = getTodosAJAX();
 
 function print_todo_elements(id, todos_data_json) {
+    //function to print todos according to their status and corresponding div tag.
+
     var todos = JSON.parse(todos_data_json);
     var parent = document.getElementById(id);
     parent.innerHTML = "";
@@ -61,6 +65,7 @@ function createTodoElement(id, todo_object) {
 }
 
 function activeAJAX(id) {
+    //function to make active a completed todo.
     var xhr = new XMLHttpRequest();
     xhr.open("PUT","/api/todos/"+id,true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -81,6 +86,7 @@ function activeAJAX(id) {
 }
 
 function completeAJAX(id) {
+    //function to make complete an active todo.
     var xhr = new XMLHttpRequest();
     xhr.open("PUT","/api/todos/"+id,true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -101,8 +107,9 @@ function completeAJAX(id) {
 }
 
 function deleteAJAX(id) {
-    var alert = window.confirm("Do you want to delete this todo..");
-    if(alert) {
+    //function to delete a todo.
+    var confirm = window.confirm("Do you want to delete this todo..");
+    if(confirm) {
         var xhr = new XMLHttpRequest();
         xhr.open("DELETE", "/api/todos/" + id, true);
 
@@ -124,12 +131,14 @@ function deleteAJAX(id) {
 }
 
 function getTodosAJAX() {
+    // function to update all the todo fields.
     getTodosActiveAJAX();
     getTodosCompleteAJAX();
     getTodosDeletedAJAX();
 }
 
 function addTodoAJAX() {
+    //function to add a new active todo.
     var todo_title = document.getElementById(NEW_TODO_TITLE).value;
     var xhr = new XMLHttpRequest();
     xhr.open("POST","/api/todos",true);
@@ -156,6 +165,7 @@ function addTodoAJAX() {
 }
 
 function getTodosActiveAJAX() {
+    //function to get all active todos.
 
     //AJAX - XMLhttprequest object
     //make req to server
@@ -175,7 +185,7 @@ function getTodosActiveAJAX() {
             //Status code == 200
             if(xhr.status === STATUS_OK){
 
-                print_todo_elements("todos_list_active",xhr.responseText);
+                print_todo_elements(TODOS_LIST_ACTIVE,xhr.responseText);
             }else{
                 console.log(xhr.responseText);
             }
@@ -186,26 +196,14 @@ function getTodosActiveAJAX() {
 }
 
 function getTodosCompleteAJAX() {
-
-    //AJAX - XMLhttprequest object
-    //make req to server
-    //1. without reloading
-    //2. asynchronous
-
-    //xhr - JS object for making requests to server via JS
+    // function to get all completed todos.
     var xhr = new XMLHttpRequest();
     xhr.open("GET","/api/todos/complete",true);
 
     xhr.onreadystatechange = function () {
-        //write code here that needs to be executed after response
-
-        //has response been received
         if(xhr.readyState === RESPONSE_DONE){
-            //is response ok?
-            //Status code == 200
             if(xhr.status === STATUS_OK){
-
-                print_todo_elements("todos_list_complete",xhr.responseText);
+                print_todo_elements(TODOS_LIST_COMPLETE,xhr.responseText);
             }else{
                 console.log(xhr.responseText);
             }
@@ -216,26 +214,14 @@ function getTodosCompleteAJAX() {
 }
 
 function getTodosDeletedAJAX() {
-
-    //AJAX - XMLhttprequest object
-    //make req to server
-    //1. without reloading
-    //2. asynchronous
-
-    //xhr - JS object for making requests to server via JS
+    //function to get all deleted todos.
     var xhr = new XMLHttpRequest();
     xhr.open("GET","/api/todos/deleted",true);
 
     xhr.onreadystatechange = function () {
-        //write code here that needs to be executed after response
-
-        //has response been received
         if(xhr.readyState === RESPONSE_DONE){
-            //is response ok?
-            //Status code == 200
             if(xhr.status === STATUS_OK){
-
-                print_todo_elements("todos_list_deleted",xhr.responseText);
+                print_todo_elements(TODOS_LIST_DELETED,xhr.responseText);
             }else{
                 console.log(xhr.responseText);
             }
@@ -243,4 +229,15 @@ function getTodosDeletedAJAX() {
     }; //end of callback
 
     xhr.send(data = null);
+}
+
+
+function hideData(id) {
+    //function to toggle hide/show todos.
+    var x = document.getElementById(id);
+    if (x.style.display === 'none') {
+        x.style.display = 'block';
+    } else {
+        x.style.display = 'none';
+    }
 }

@@ -10,6 +10,7 @@ div.todoStatusCOMPLETE{
 
 div.todoStatusDELETED{
     color: darkred;
+    text-decoration: line-through;
     margin-left: 20px;
 }
 
@@ -36,7 +37,7 @@ div.category{
 
 .button{
     color: red;
-    margin-left:5px;
+    margin-left:10px;
     margin-right:5px;
 }
 
@@ -51,4 +52,10 @@ h1{
 hr{
     height: 2px;
     background-color: black;
+}
+
+a{
+    color: blueviolet;
+    float: right;
+    text-decoration: underline;
 }

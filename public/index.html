@@ -18,15 +18,18 @@
     <div class="category">Active</div><br>
     <div id="todos_list_active" ></div><br><hr><br>
 
-    <input type="text" id="new_todo_title" placeholder="Enter Todo Title"/>
-    <input class="breathHorizontal" type="button" value="Add Todo" onclick="addTodoAJAX()"/><br><br><hr><br>
+    <div class="category" style="opacity: 0.5;">Add Todo</div><br>
+    <input style="margin-left: 20px" type="text" id="new_todo_title" placeholder="Enter Todo Title"/>
+    <input class="breathHorizontal" type="button" value="Add" onclick="addTodoAJAX()"/><br><br><hr><br>
 
-    <div class="category">Complete</div><br>
+    <div class="category">Complete
+        <a onclick="hideData('todos_list_complete')">Hide/Show completed todos</a> </div><br>
+
     <div id="todos_list_complete" ></div><br><hr><br>
 
-    <div class="category">Deleted</div><br>
+    <div class="category">Deleted
+        <a onclick="hideData('todos_list_deleted')">Hide/Show deleted todos</a> </div><br>
     <div id="todos_list_deleted" ></div><br><hr><br>
-
 
 </body>
 
