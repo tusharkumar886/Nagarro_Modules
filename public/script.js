@@ -30,16 +30,15 @@ function createTodoElement(id, todo_object) {
     if (todo_object.status === "ACTIVE"){
 
             var complete_button = document.createElement("input");
-            complete_button.innerText = "Mark as complete";
             complete_button.setAttribute("type","checkbox");
             complete_button.setAttribute("onchange", "completeAJAX("+id+")");
-            complete_button.setAttribute("class", "breathHorizontal");
+            complete_button.setAttribute("class", "checkbox");
             todo_element.appendChild(complete_button);
 
             var remove_button = document.createElement("button");
             remove_button.innerText = "x";
             remove_button.setAttribute("onclick", "deleteAJAX("+id+")");
-            remove_button.setAttribute("class", "breathHorizontal");
+            remove_button.setAttribute("class", "button");
             todo_element.appendChild(remove_button);
 
     }else
@@ -48,13 +47,13 @@ function createTodoElement(id, todo_object) {
         active_button.setAttribute("type","checkbox");
         active_button.setAttribute("checked","true");
         active_button.setAttribute("onchange", "activeAJAX("+id+")");
-        active_button.setAttribute("class", "breathHorizontal");
+        active_button.setAttribute("class", "checkbox");
         todo_element.appendChild(active_button);
 
         var delete_button = document.createElement("button");
         delete_button.innerText = "x";
         delete_button.setAttribute("onclick","deleteAJAX("+id+")");
-        delete_button.setAttribute("class", "breathHorizontal");
+        delete_button.setAttribute("class", "button");
         todo_element.appendChild(delete_button);
     }
 
@@ -102,21 +101,26 @@ function completeAJAX(id) {
 }
 
 function deleteAJAX(id) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("DELETE","/api/todos/"+id,true);
+    var alert = window.confirm("Do you want to delete this todo..");
+    if(alert) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("DELETE", "/api/todos/" + id, true);
 
-    xhr.onreadystatechange = function(){
+        xhr.onreadystatechange = function () {
 
-        if (xhr.readyState === RESPONSE_DONE) {
-            if (xhr.status === STATUS_OK) {
-                getTodosAJAX()
+            if (xhr.readyState === RESPONSE_DONE) {
+                if (xhr.status === STATUS_OK) {
+                    getTodosAJAX()
+                }
+                else {
+                    console.log(xhr.responseText);
+                }
             }
-            else {
-                console.log(xhr.responseText);
-            }
-        }
-    };
-    xhr.send(data = null);
+        };
+        xhr.send(data = null);
+    }else{
+        getTodosAJAX();
+    }
 }
 
 function getTodosAJAX() {

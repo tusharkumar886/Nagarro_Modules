@@ -1,15 +1,16 @@
 div.todoStatusACTIVE {
     color: blue;
+    margin-left: 20px;
 }
 
 div.todoStatusCOMPLETE{
     color: darkgreen;
-    text-decoration: line-through;
+    margin-left: 20px;
 }
 
 div.todoStatusDELETED{
     color: darkred;
-    text-decoration: line-through;
+    margin-left: 20px;
 }
 
 div.category{
@@ -23,6 +24,17 @@ div.category{
 }
 
 .breathHorizontal {
+    margin-left:5px;
+    margin-right:5px;
+}
+
+.checkbox{
+    float: left;
+    margin-left:5px;
+    margin-right:5px;
+}
+
+.button{
     color: red;
     margin-left:5px;
     margin-right:5px;
