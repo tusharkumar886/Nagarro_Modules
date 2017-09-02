@@ -28,7 +28,7 @@ npm install -g nodemon
 
 ## Deployment
 
-You can deploy this on your local server (localhost:3000) using following command:
+You can deploy this on your local server (localhost:4000) using following command:
 
 ```
 npm start
