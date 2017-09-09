@@ -17,10 +17,11 @@ git clone https://github.com/tusharkumar886/Nagarro_Modules
 
 ### Prerequisites
 
-You required to install express and nodemon on thier system or in the local directory in which the project is cloned using the following commands for the terminal.
+You required to install some node modules on your system or in the local directory in which the project is cloned using the following commands in the terminal.
+
 
 ```
-npm install express --save
+npm install
 ```
 ```
 npm install -g nodemon
