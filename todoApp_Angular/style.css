@@ -1,0 +1,63 @@
+body{
+    background: linear-gradient(to left,#185a9d, #43cea2);
+}
+
+#newTodo{
+    width: 50%;
+    display: inline-block;
+    padding: 0px 0px 0px 10px;
+    margin: 0px 0px 15px 10px;
+    font-size: 17px;
+    color: #616161;
+}
+
+h1{
+    font-family: Algerian, sans-serif;
+    padding: 30px;
+    text-align: center;
+    color: gold;
+    background-color: rgba(0,0,0,0.3);
+}
+
+hr{
+    height: 3px;
+    background-color: black;
+}
+
+.category{
+    font-size: 20px;
+}
+
+#active{
+    color: dodgerblue;
+    margin-left: 30px;
+}
+
+#complete{
+    color: darkgreen;
+    margin-left: 30px;
+}
+
+#delete{
+    color: darkred;
+    text-decoration: line-through;
+    margin-left: 30px;
+}
+
+li{
+    color: #616161;
+    overflow: hidden;
+}
+
+input[type="checkbox"]{
+    width: 20px;
+    height: 20px;
+    margin-right: 2%;
+    color: green;
+}
+
+button{
+    background-color: rgba(1,0,0,0.1);
+    color: darkred;
+    margin-left: 15%;
+}
